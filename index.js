@@ -2,11 +2,6 @@ const http = require('http');
 const port = 3000;        
 
 const fs = require('fs');
-let readhtml;
-
-fs.readFile('index.html', 'utf-8', (err, data) => {
-    readhtml = data;
-});
 
 http.createServer((req, res) => { 
     if (req.url === '/'){
@@ -16,8 +11,10 @@ http.createServer((req, res) => {
         console.log(req);   
         res.end();  
     } else if (req.url === '/contact'){
-        res.write(readhtml);
-        res.end();
+        fs.readFile('contact.html', 'utf-8', (err, data) => {
+            res.write(data);   
+            res.end();
+        });
     } else {
         res.write('Route not found');   
         res.end();                        
